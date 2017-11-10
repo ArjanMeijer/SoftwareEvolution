@@ -43,11 +43,11 @@ public rel[loc, list[str]] ReadFiles (loc dir) {
 	return {<x, readFileLines(x)>|x <- files};
 }
 
-public list[List[str]] GetUnits(list[str] lines){
+public list[list[str]] GetUnits(list[str] lines){
 	
 	int stack = -1;
 	list[str] current = [];
-	list[list[str]] result = [];
+	list[list[str]] res = [];
 	str tRes = "";
 	for(line <- lines)
 	{
@@ -67,7 +67,7 @@ public list[List[str]] GetUnits(list[str] lines){
 					tRes += c;
 				} else {
 					current += tRes;
-					result += current;
+					res += current;
 					current = [];
 					tRes = "";
 				};
@@ -76,7 +76,7 @@ public list[List[str]] GetUnits(list[str] lines){
 		};
 	};
 	
-	
+	return res;
 }
 
 public list[str] RemoveComments(list[str] lines){
