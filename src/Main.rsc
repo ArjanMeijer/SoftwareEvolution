@@ -9,14 +9,15 @@ import LineCounterTest;
 
 
 public void Main() {
-	println("Hello world!");
+	println("SIG Analyser");
 	
 	// We don't need the M3 model yet.
-	//m = createM3FromEclipseProject(|project://smallsql0.21_src|);
+	// m = createM3FromEclipseProject(|project://smallsql0.21_src|);
 	
 	//loc folder = |project://smallsql0.21_src/src/smallsql/|;
-	//ReadFiles(folder);
+	loc folder = |project://hsqldb-2.3.1|;
+
 	
-	//lines = ["Pieter", "Henk", "Arjan", "Niels"];
-	//println(ConcatCodeLines(lines));
+	int volume = GetVolume(folder);
+	println("Volume: <volume>");
 }

@@ -5,6 +5,31 @@ import util::FileSystem;
 import String;
 import List;
 
+public int GetVolume(loc dir) {
+ 	// Read all files from directory.
+	rel[loc, list[str]] files = ReadFiles(dir);
+	
+	// Get all the lines of code.
+	list[list[str]] code = [x[1]| x<-files];
+ 	
+ 	// Count the lines.
+ 	return CountAllLines(code);
+}
+
+public int CountAllLines(list[list[str]] files) {
+//	int result = 0;
+//	int index = 0;
+//	
+//	while(index < size(files)) {
+//		result += size(files[index]);
+//		index += 1;
+//	};
+//
+//	return result;
+
+	return sum([CountLines(x)| x <-files]);
+}
+
 public int CountLines(list[str] lines){
 	return size(RemoveComments(lines));
 }
