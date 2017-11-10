@@ -17,6 +17,6 @@ public void Main() {
 	//loc folder = |project://smallsql0.21_src/src/smallsql/|;
 	//ReadFiles(folder);
 	
-	lines = ["Pieter", "Henk", "Arjan", "Niels"];
-	println(ConcatCodeLines(lines));
+	//lines = ["Pieter", "Henk", "Arjan", "Niels"];
+	//println(ConcatCodeLines(lines));
 }
