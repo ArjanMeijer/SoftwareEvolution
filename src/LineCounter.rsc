@@ -16,6 +16,8 @@ public int GetVolume(loc dir) {
  	return CountAllLines(code);
 }
 
+
+
 public int CountAllLines(list[list[str]] files) {
 //	int result = 0;
 //	int index = 0;
@@ -39,6 +41,42 @@ public rel[loc, list[str]] ReadFiles (loc dir) {
 	set[loc] files = visibleFiles(dir);
 
 	return {<x, readFileLines(x)>|x <- files};
+}
+
+public list[List[str]] GetUnits(list[str] lines){
+	
+	int stack = -1;
+	list[str] current = [];
+	list[list[str]] result = [];
+	str tRes = "";
+	for(line <- lines)
+	{
+		for(c <- split("",line))
+		{
+			if (c == "{"){
+				stack += 1;
+			};
+			
+			if(stack != 0){
+				if(c == "}")
+				{
+					stack -= 1;
+				};
+				
+				if(stack != 0){
+					tRes += c;
+				} else {
+					current += tRes;
+					result += current;
+					current = [];
+					tRes = "";
+				};
+			};
+			current += tRes;
+		};
+	};
+	
+	
 }
 
 public list[str] RemoveComments(list[str] lines){
