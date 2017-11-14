@@ -16,7 +16,7 @@ test bool RemoveFromStringTest(){
 }
 
 test bool RemoveCommentsTest(){
-	list[str] code = ["", "/*", "author: Arjan Meijer", "*/", "public void Test(){", "println(\"Hello world!\");", "}" ];
+	list[str] code = ["", "/*", "author: Arjan Meijer", "*/", "public void Test(){", "println(\"Hello world!\");", "public void Nope(){","someMethodCall(someInput);","and a calculation","}", "}" ];
 	list[str] withoutComments = RemoveComments(code);	
 	return ["public void Test(){","println(\"Hello world!\");","}"] == withoutComments;
 }

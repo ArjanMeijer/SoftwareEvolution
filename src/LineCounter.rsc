@@ -44,39 +44,40 @@ public rel[loc, list[str]] ReadFiles (loc dir) {
 }
 
 public list[list[str]] GetUnits(list[str] lines){
-	
-	int stack = -1;
-	list[str] current = [];
-	list[list[str]] res = [];
-	str tRes = "";
-	for(line <- lines)
-	{
-		for(c <- split("",line))
-		{
-			if (c == "{"){
-				stack += 1;
-			};
-			
-			if(stack != 0){
-				if(c == "}")
-				{
-					stack -= 1;
-				};
-				
-				if(stack != 0){
-					tRes += c;
-				} else {
-					current += tRes;
-					res += current;
-					current = [];
-					tRes = "";
-				};
-			};
-			current += tRes;
-		};
-	};
-	
-	return res;
+    str lineSplitter = "[ENDOFLINE]";
+    str input = ConcatList(lines,lineSplitter);
+    list[str] chars = split("", input);
+    int counter = 0;
+    list[str] result = [];
+    str tempRes = "";
+    for(c <- chars)
+    {
+      	
+    	if(c == "}")
+    	{
+    		println("CLOSED - " + tempRes);
+    		counter -= 1;
+    	    if(counter == 1)
+    	    {
+    	    	result += tempRes;
+    	    	tempRes = "";
+    	    	println(result);
+    	    };	
+    	};
+    	
+    	if(counter > 1)
+    	{
+    		tempRes += c;
+    	};
+    	
+    	if(c == "{")
+    	{
+    		println("OPEN");
+    	    		counter += 1;
+    	    		};
+    };
+    
+    return [StringToList(x, lineSplitter) | x <- result];
 }
 
 public list[str] RemoveComments(list[str] lines){
@@ -95,6 +96,10 @@ public list[str] RemoveComments(list[str] lines){
 
 	// Reomve all the empty lines.
 	return [x| x <- withoutComments, x != ""];
+}
+
+public list[str] StringToList(str lines, str concatValue){
+    return [x | x <- split(concatValue,lines), x != ""];
 }
 
 public str ConcatList(list[str] lines, str concatValue){

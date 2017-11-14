@@ -19,7 +19,7 @@ public void Main() {
  //	x = createM3FromDirectory(file);
 	//text(x);
 	
-	text(GetUnits(["", "/*", "author: Arjan Meijer", "*/", "{public void Test(){", "println(\"Hello world!\");", "}}" ]));
+	text(GetUnits(["{", "/*", "author: Arjan Meijer", "*/", "public void Test(){", "println(\"Hello world!\");", "}", "public void Nope(){","someMethodCall(someInput);", "and a calculation", "}", "}" ]));
 	
 	loc folder = |project://smallsql0.21_src/src/smallsql/|;
 	//loc folder = |project://hsqldb-2.3.1|;
