@@ -19,15 +19,6 @@ public int GetVolume(loc dir) {
 
 
 public int CountAllLines(list[list[str]] files) {
-//	int result = 0;
-//	int index = 0;
-//	
-//	while(index < size(files)) {
-//		result += size(files[index]);
-//		index += 1;
-//	};
-//
-//	return result;
 
 	return sum([CountLines(x)| x <-files]);
 }
@@ -50,31 +41,29 @@ public list[list[str]] GetUnits(list[str] lines){
     int counter = 0;
     list[str] result = [];
     str tempRes = "";
+    
     for(c <- chars)
     {
-      	
-    	if(c == "}")
-    	{
-    		println("CLOSED - " + tempRes);
-    		counter -= 1;
-    	    if(counter == 1)
-    	    {
-    	    	result += tempRes;
-    	    	tempRes = "";
-    	    	println(result);
-    	    };	
-    	};
+	    	if(c == "}")
+	    	{
+	    		counter -= 1;
+	    
+	    	    if(counter == 1)
+	    	    {
+	    	    		result += tempRes;
+	    	    		tempRes = "";
+	    	    };	
+	    	};
     	
-    	if(counter > 1)
-    	{
-    		tempRes += c;
-    	};
+	    	if(counter > 1)
+	    	{
+	    		tempRes += c;
+	    	};
     	
-    	if(c == "{")
-    	{
-    		println("OPEN");
-    	    		counter += 1;
-    	    		};
+	    	if(c == "{")
+	    	{
+    			counter += 1;
+       	};
     };
     
     return [StringToList(x, lineSplitter) | x <- result];
