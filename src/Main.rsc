@@ -6,6 +6,7 @@ import lang::java::m3::Core;
 import util::ValueUI;
 
 import LineCounter;
+import Complexity;
 import LineCounterTest;
 
 
