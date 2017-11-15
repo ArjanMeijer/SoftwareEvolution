@@ -13,18 +13,19 @@ import LineCounterTest;
 public void Main() {
 	println("SIG Analyser");
 	
-	// We don't need the M3 model yet.
-	// m = createM3FromEclipseProject(|project://smallsql0.21_src|);
-	
 	loc file = |project://smallsql0.21_src/src/smallsql/tools|;
- //	x = createM3FromDirectory(file);
-	//text(x);
+
+	//text(GetUnits(["{", "/*", "author: Arjan Meijer", "*/", "public void Test(){", "println(\"Hello world!\");", "}", "public void Nope(){","someMethodCall(someInput);", "and a calculation", "}", "}" ]));
 	
-	text(GetUnits(["{", "/*", "author: Arjan Meijer", "*/", "public void Test(){", "println(\"Hello world!\");", "}", "public void Nope(){","someMethodCall(someInput);", "and a calculation", "}", "}" ]));
+	list[str] code = ["{", "/*", "author: Arjan Meijer", "*/", "public void Test(){", "println(\"Hello world!\");", "}", "public void Nope(){","someMethodCall(someInput);", "and a calculation", "}", "}" ];
+	str conccated = ConcatList(code, "");
+	
+	println(GetComplexity(conccated));
+	
+	
 	
 	loc folder = |project://smallsql0.21_src/src/smallsql/|;
-	//loc folder = |project://hsqldb-2.3.1|;
-	
+
 	int volume = GetVolume(folder);
 	println("Volume: <volume>");
 }
