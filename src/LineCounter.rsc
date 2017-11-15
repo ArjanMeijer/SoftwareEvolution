@@ -16,10 +16,7 @@ public int GetVolume(loc dir) {
  	return CountAllLines(code);
 }
 
-
-
 public int CountAllLines(list[list[str]] files) {
-
 	return sum([CountLines(x)| x <-files]);
 }
 
@@ -112,8 +109,8 @@ public str RemoveFromString(str subject, str begin, str end)
 			
 			if(size(y) > 1){
 				x = y[1];
-			}
-		}
+			};
+		};
 		
 		result += x;
 	};
