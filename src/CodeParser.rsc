@@ -14,8 +14,8 @@ public M3 GetModel(loc project){
 	return createM3FromEclipseProject(project);
 }
 
-public list[tuple[loc,loc,str]] Parse(M3 model, str project){
-	return [<MethodToFile(x, project), x, readFile(x)> | x <- methods(model)];	
+public list[tuple[loc,loc,str]] Parse(M3 model){
+	
 }
 
 public loc MethodToFile(loc method, str project)
