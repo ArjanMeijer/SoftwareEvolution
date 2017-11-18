@@ -1,5 +1,6 @@
 module CodeParser
 
+import Exception;
 import String;
 import IO;
 import util::ValueUI;
@@ -20,5 +21,13 @@ public lrel[loc,CodeUnit, str] Parse(M3 model){
 }
 
 private CodeUnit GetCodeUnit(str content){
-	return [m | /CodeUnit m := parse(#start[CodeUnit], content,allowAmbiguity=true)][0];
+	try 
+		return [m | /CodeUnit m := parse(#start[CodeUnit], content)][0]; 
+	catch: 
+		return blah(content);
+}
+
+private CodeUnit blah(str content){
+	text(content);
+	return 0;
 }

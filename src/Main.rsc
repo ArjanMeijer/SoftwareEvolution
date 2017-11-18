@@ -22,9 +22,9 @@ public void Main() {
 	loc project = |project://smallsql0.21_src|;
 	loc largeProject = |project://hsqldb-2.3.1|;
 	
-	M3 model = GetModel(project);
-	num volume = GetVolume(project);
-	println(volume);
+	M3 model = GetModel(largeProject);
+	//num volume = GetVolume(largeProject);
+	//println(volume);
 	
 	lrel[loc,CodeUnit, str] methods = Parse(model);
 	list[num] lengths = ModuleLengths(methods);
