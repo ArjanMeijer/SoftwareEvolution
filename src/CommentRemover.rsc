@@ -8,7 +8,7 @@ public str RemoveComments(str line){
 	str lineSplitter = "\n";
 	list[str] lines = split(lineSplitter, line);
 	// Initialize withoutComments and remove all the // comments.
-	list[str] withoutComments = [x | x <- lines, !startsWith(x, "//")];
+	list[str] withoutComments = [x | x <- lines, !contains(x, "//")];
 	str concattedCode = ConcatList(lines, lineSplitter);
 
 	// Remove all the test between /* */
