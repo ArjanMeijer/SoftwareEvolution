@@ -25,9 +25,10 @@ public void Main() {
 	M3 model = GetModel(project);
 	num volume = GetVolume(project);
 	println(volume);
+	
 	lrel[loc,CodeUnit, str] methods = Parse(model);
-	list[int] lengths = ModuleLengths(methods);
-	list[int] complexity = ModuleComplexity(methods);
+	list[num] lengths = ModuleLengths(methods);
+	list[num] complexity = ModuleComplexity(methods);
 }
 
 private list[num] ModuleLengths(lrel[loc,CodeUnit, str] modules){
