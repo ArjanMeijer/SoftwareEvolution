@@ -20,5 +20,6 @@ public lrel[loc,CodeUnit, str] Parse(M3 model){
 }
 
 private CodeUnit GetCodeUnit(str content){
+	println(content);
 	return [m | /CodeUnit m := parse(#start[CodeUnit], content)][0];
 }
