@@ -20,15 +20,16 @@ import LineCounterTest;
 public void Main() {
 	println("SIG Analyser");
 	loc project = |project://smallsql0.21_src|;
-		
+	
 	M3 model = GetModel(project);
 	lrel[loc,CodeUnit, str] methods = Parse(model);
 	list[int] lengths = ModuleLengths(methods);
-	list[int] complexity = [GetComplexity(x) | x <- methods];
+	list[int] complexity = ModuleComplexity(methods);
+	
 }
 
 private list[int] ModuleLengths(lrel[loc,CodeUnit, str] modules){
-	return [LinesOfCode(x) | <_,_,x> <- modules];
+	return [LinesOfCode(RemoveComments(x)) | <_,_,x> <- modules];
 }
 
 private list[int] ModuleComplexity(lrel[loc,CodeUnit, str] modules){

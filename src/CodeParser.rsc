@@ -16,7 +16,7 @@ public M3 GetModel(loc project){
 }
 
 public lrel[loc,CodeUnit, str] Parse(M3 model){
-	return [<x, GetCodeUnit(y), y> | x <- methods(model), y := RemoveComments(readFile(x))];
+	return [<x, GetCodeUnit(RemoveComments(y)), y> | x <- methods(model), y := readFile(x)];
 }
 
 private CodeUnit GetCodeUnit(str content){
