@@ -20,13 +20,19 @@ import LineCounterTest;
 public void Main() {
 	println("SIG Analyser");
 	loc project = |project://smallsql0.21_src|;
+	loc largeProject = |project://hsqldb-2.3.1|;
 	
 	M3 model = GetModel(project);
 	num volume = GetVolume(project);
 	println(volume);
 	lrel[loc,CodeUnit, str] methods = Parse(model);
 	list[int] lengths = ModuleLengths(methods);
+	text(lengths);
 	list[int] complexity = ModuleComplexity(methods);
+	text(complexity);
+	
+	
+	
 }
 
 private list[int] ModuleLengths(lrel[loc,CodeUnit, str] modules){
