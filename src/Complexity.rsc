@@ -12,8 +12,8 @@ import lang::java::jdt::m3::AST;
 import lang::java::\syntax::Java15;
 import lang::java::\syntax::Disambiguate;
 
-private int cyclomaticComplexity(CodeUnit m) {
-  result = 1;
+private num cyclomaticComplexity(CodeUnit m) {
+  num result = 1;
   visit (m) {
     case (Stm)`do <Stm _> while (<Expr _>);`: result += 1;
     case (Stm)`while (<Expr _>) <Stm _>`: result += 1;
@@ -29,6 +29,6 @@ private int cyclomaticComplexity(CodeUnit m) {
   return result;
 }
 
-public int GetComplexity(CodeUnit cUnit){
+public num GetComplexity(CodeUnit cUnit){
 	return cyclomaticComplexity(cUnit);
 }

@@ -25,18 +25,18 @@ public void Main() {
 	num volume = GetVolume(project);
 	println(volume);
 	lrel[loc,CodeUnit, str] methods = Parse(model);
-	list[int] lengths = ModuleLengths(methods);
-	list[int] complexity = ModuleComplexity(methods);
+	list[num] lengths = ModuleLengths(methods);
+	list[num] complexity = ModuleComplexity(methods);
 }
 
-private list[int] ModuleLengths(lrel[loc,CodeUnit, str] modules){
+private list[num] ModuleLengths(lrel[loc,CodeUnit, str] modules){
 	return [LinesOfCode(RemoveComments(x)) | <_,_,x> <- modules];
 }
 
-private list[int] ModuleComplexity(lrel[loc,CodeUnit, str] modules){
+private list[num] ModuleComplexity(lrel[loc,CodeUnit, str] modules){
 	return [GetComplexity(x) | <_,x,_> <- modules];
 }
 
 private num GetVolume(project){
-	return 0;//sum({LinesOfCode(RemoveComments(readFile(x))) | /file(x) <- crawl(project), x.extension == "java"});
+	return sum([LinesOfCode(RemoveComments(readFile(x))) | /file(x) <- crawl(project), x.extension == "java"]);
 }

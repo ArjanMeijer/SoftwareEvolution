@@ -1,5 +1,5 @@
 module CommentCodeRatio
 
-public float GetCommentCodeRatio(str lines){
+public num GetCommentCodeRatio(str lines){
 	
 }
