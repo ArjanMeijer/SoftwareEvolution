@@ -22,7 +22,7 @@ public lrel[loc,CodeUnit, str] Parse(M3 model){
 
 private CodeUnit GetCodeUnit(str content){
 	try 
-		return [m | /CodeUnit m := parse(#start[CodeUnit], content)][0]; 
+		return [m | /CodeUnit m := parse(#start[CodeUnit], content,allowAmbiguity=true)][0]; 
 	catch: 
 		return blah(content);
 }
