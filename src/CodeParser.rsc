@@ -17,17 +17,17 @@ public M3 GetModel(loc project){
 }
 
 public lrel[loc,CodeUnit, str] Parse(M3 model){
-	return [<x, GetCodeUnit(RemoveComments(y)), y> | x <- methods(model), y := readFile(x)];
+	return [<x, GetCodeUnit(y), y> | x <- methods(model), y := readFile(x)];
 }
 
-private CodeUnit GetCodeUnit(str content){
+public CodeUnit GetCodeUnit(str content){
+	str input = RemoveComments(content);
 	try 
-		return [m | /CodeUnit m := parse(#start[CodeUnit], content,allowAmbiguity=true)][0]; 
+		return [m | /CodeUnit m := parse(#start[CodeUnit], input,allowAmbiguity=true)][0]; 
 	catch: 
-		return blah(content);
-}
-
-private CodeUnit blah(str content){
-	text(content);
-	return 0;
+	{
+		text(content);
+		text(input);
+		return 0;
+	};
 }

@@ -1,68 +1,50 @@
 module CommentRemover
 
 import String;
-import List;
-import IO;
-import util::ValueUI;
-import util::FileSystem;
-
 
 public str RemoveComments(str line){
-	str lineSplitter = "\n";
-	list[str] lines = split(lineSplitter, line);
-	// Initialize withoutComments and remove all the // comments.
-	list[str] withoutComments = [RemoveDSComment(trim(x)) | x <- lines];
-	str concattedCode = ConcatList(withoutComments);
-
-	// Remove all the test between /* */
-	return RemoveFromString(concattedCode, "/*", "*/");
-}
-
-public str RemoveDSComment(str line)
-{
 	list[str] chars = split("", line);
 	bool isString = false;
 	bool isComment = false;
+	bool isMComment = false;
 	str result = "";
 	str lastChar = "";
+	int skip = 0;
 	for(c <- chars){
+		// Toggle string
 		if(c == "\"" && !isComment)
 			isString = !isString;
 		
-		if(!isString && lastChar == "/" && c == "/")
-			isComment = true;
+		// Start comment check
+		if(!isString && lastChar == "/")
+		{
+			if(c == "/")
+				isComment = true;
+			if(c == "*")
+				isMComment = true;
+		// End line comment Check
+		} else if(isComment && lastChar == "\n"){
+			isComment = false;
+			skip = 1;
+		// End multilineComment check
+		} else if(isMComment && lastChar == "*" && c == "/")
+		{
+			isMComment = false;
+			skip = 2;
+		};
 		
-		if(!isComment)
+		// Add character to result
+		if(!isComment && !isMComment && skip == 0)
 			result += lastChar;
+		else if(skip > 0)
+			skip -= 1;
+		
+		// Update Last value
 		lastChar = c;
 	};
 	
-	if(!isComment)
+	// Add last value to result
+	if(!isComment && !isMComment && skip == 0)
 		result += lastChar;
-	return result;
-}
-
-public str ConcatList(list[str] lines){
-	str result  = "";
-	for(line <- lines)
-		result += line;
-	return result;
-}
-
-public str RemoveFromString(str subject, str begin, str end)
-{
-	list[str] parts = split(end, subject);
-	str result = "";
-	for(part <- parts){
-		if(!startsWith(part,begin))
-		{
-			if(contains(part, begin))
-			{
-				result += split(begin,part)[0];
-			}else{
-				result += part;
-			};
-		};
-	};
 	return result;
 }
