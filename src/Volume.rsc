@@ -1,5 +1,10 @@
 module Volume
 
+import LineCounter;
+import CommentRemover;
+import util::FileSystem;
+import List;
+import IO;
 
 public str VolumeScore(loc project){
 	num score = GetVolume(project);

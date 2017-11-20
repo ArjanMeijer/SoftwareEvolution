@@ -16,6 +16,7 @@ import LineCounter;
 import Complexity;
 import LineCounterTest;
 import CommentCodeRatio;
+import Volume;
 
 public void Main() {
 	println("SIG Analyser");
@@ -23,15 +24,11 @@ public void Main() {
 	loc largeProject = |project://hsqldb-2.3.1|;
 	
 	M3 model = GetModel(project);
-
-	println("getting units");
 	lrel[loc,CodeUnit, str] methods = Parse(model);
-	println("units created");
-	num volume = GetVolume(project);
+	str volume = VolumeScore(project);
 	list[num] lengths = ModuleLengths(methods);
 	list[num] complexity = ModuleComplexity(methods);
 	list[num] codeCommentRatio = CodeCommentRatio(methods);
-	text(codeCommentRatio);
 }
 
 private list[num] ModuleLengths(lrel[loc,CodeUnit, str] modules){
@@ -40,10 +37,6 @@ private list[num] ModuleLengths(lrel[loc,CodeUnit, str] modules){
 
 private list[num] ModuleComplexity(lrel[loc,CodeUnit, str] modules){
 	return [GetComplexity(x) | <_,x,_> <- modules];
-}
-
-private num GetVolume(loc project){
-	return sum([LinesOfCode(RemoveComments(readFile(x))) | /file(x) <- crawl(project), x.extension == "java"]);
 }
 
 private list[num] CodeCommentRatio(lrel[loc,CodeUnit,str] modules){
