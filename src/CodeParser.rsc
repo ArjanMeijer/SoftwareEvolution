@@ -15,8 +15,14 @@ public M3 GetModel(loc project){
 	return createM3FromEclipseProject(project);
 }
 
-public lrel[loc,CodeUnit, str] Parse(M3 model){
-	return [<x, GetCodeUnit(y), y> | x <- methods(model), y := readFile(x)];
+public lrel[str,CodeUnit, str] Parse(M3 model){
+	return [<LocToMethod(x), GetCodeUnit(y), y> | x <- methods(model), y := readFile(x)];
+}
+
+private str LocToMethod(loc l)
+{
+	list[str] parts = split("/", l.path);
+	return split("(",parts[size(parts) - 1])[0];
 }
 
 public CodeUnit GetCodeUnit(str content){

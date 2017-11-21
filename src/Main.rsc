@@ -20,6 +20,7 @@ import LineCounterTest;
 import CommentCodeRatio;
 import Volume;
 import TestAnalyzer;
+import DateTime;
 
 public void Main() {
 	println("SIG Analyser - Assignment \nBy Niels Boerkamp and Arjan Meijer.");
@@ -29,19 +30,13 @@ public void Main() {
 	
 	loc project = |project://smallsql0.21_src|;
 	
-	set[Declaration] ast = createAstsFromDirectory(|project://smallsql0.21_src|, true);
-	
-	/*
 	println("--- Progress ---");
 	println("\t-- Creating M3 Model");
 	M3 model = GetModel(project);
 	
 	println("\t-- Parsing Units");
-	lrel[loc,CodeUnit, str] units = Parse(model);
-	
-	GetPercentage([<x,y> | <_,x,y> <- units]);
-	
-	
+	lrel[str,CodeUnit,str] units = Parse(model);
+		
 	println("\t-- Calculating Volume Score");
 	int volumeScore = GetVolumeScore(project);
 	
@@ -50,12 +45,12 @@ public void Main() {
 
 	println("\t-- Calculating Code Duplication Score");
 	int codeDuplicationScore =  GetDuplicationScore([x | <_,_,x> <- units]);
-	
+
 	println("\t-- Calculating Unit Size Score");
 	int unitSizeScore = GetUnitSizeScore([RemoveComments(x) | <_,_,x> <- units]);
 	
 	println("\t-- Calculating Test score");
-	int testingScore = 3;
+	int testingScore = GetTestScore([<x,y> | <x,_,y> <- units]);
 	
 	println("\t-- Calculating Overall Score");
 	int overallScore = AvgScore([volumeScore, unitComplexityScore, codeDuplicationScore, unitSizeScore, testingScore]);
@@ -77,8 +72,7 @@ public void Main() {
 	println("\tAnalyzability Score: " + ScoreToString(analyzabilityScore));
 	println("\tChangeability Score: " + ScoreToString(changeabilityScore));
 	println("\tStability Score: " + ScoreToString(stabilityScore));
-	println("\tTestability Score: " + ScoreToString(testabilityScore));*/
-	
+	println("\tTestability Score: " + ScoreToString(testabilityScore));
 }
 
 private int AvgScore(list[int] scores)
