@@ -1,6 +1,5 @@
 module CodeParser
 
-import Exception;
 import String;
 import IO;
 import util::ValueUI;
@@ -22,12 +21,5 @@ public lrel[loc,CodeUnit, str] Parse(M3 model){
 
 public CodeUnit GetCodeUnit(str content){
 	str input = RemoveComments(content);
-	try 
-		return [m | /CodeUnit m := parse(#start[CodeUnit], input,allowAmbiguity=true)][0]; 
-	catch: 
-	{
-		text(content);
-		text(input);
-		return 0;
-	};
+	return [m | /CodeUnit m := parse(#start[CodeUnit], input,allowAmbiguity=true)][0]; 
 }

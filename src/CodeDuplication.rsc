@@ -6,6 +6,21 @@ import IO;
 import util::ValueUI;
 import util::Math;
 
+public int GetDuplicationScore(list[str] unitLines)
+{
+	num res = GetDuplication(unitLines);
+	if(res <= 0.03)
+		return 5;
+	else if (res <= 0.05)
+		return 4;
+	else if(res <= 0.1)
+		return 3;
+	else if (res <= 0.2)
+		return 2;
+	else
+		return 1;
+}
+
 public num GetDuplication(list[str] moduleContents)
 {
 	lrel[str, lrel[int,int,bool]] index = CreateIndex(moduleContents);
@@ -76,5 +91,3 @@ private lrel[str, lrel[int,int,bool]] CreateIndex(list[str] modules){
 	};
 	return index;
 }
-
-

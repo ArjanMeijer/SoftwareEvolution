@@ -6,18 +6,18 @@ import util::FileSystem;
 import List;
 import IO;
 
-public str VolumeScore(loc project){
+public int GetVolumeScore(loc project){
 	num score = GetVolume(project);
 	if(score < 66000)
-		return "++";
+		return 5;
 	else if(score < 246000)
-		return "+";
+		return 4;
 	else if(score < 665000)
-		return "o";
+		return 3;
 	else if(score < 1310000)
-		return "-";
+		return 2;
 	else
-		return "--";
+		return 1;
 }
 
 private num GetVolume(loc project){

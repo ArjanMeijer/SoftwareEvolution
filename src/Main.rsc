@@ -2,6 +2,7 @@ module Main
 
 import util::ValueUI;
 import util::FileSystem;
+import util::Math;
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
 import lang::java::m3::AST;
@@ -18,32 +19,74 @@ import Complexity;
 import LineCounterTest;
 import CommentCodeRatio;
 import Volume;
+import TestAnalyzer;
 
 public void Main() {
-	println("SIG Analyser");
+	println("SIG Analyser - Assignment \nBy Niels Boerkamp and Arjan Meijer.");
+	println("Implementation of the SIG model as described in:\n\t\"A Practical Model for Measuring Maintainability\"");
+	println("\t By Ilja Heitlager, Tobias Kuipers and Joost Visser");
+	println("\n\n");
+	
 	loc project = |project://smallsql0.21_src|;
-	loc largeProject = |project://hsqldb-2.3.1|;
 	
+	set[Declaration] ast = createAstsFromDirectory(|project://smallsql0.21_src|, true);
+	
+	/*
+	println("--- Progress ---");
+	println("\t-- Creating M3 Model");
 	M3 model = GetModel(project);
-	lrel[loc,CodeUnit, str] methods = Parse(model);
 	
-	res = GetDuplication([trim(RemoveComments(x[2])) | x <- methods]);
-	println(res);
+	println("\t-- Parsing Units");
+	lrel[loc,CodeUnit, str] units = Parse(model);
 	
-	/*str volume = VolumeScore(project);
-	list[num] lengths = ModuleLengths(methods);
-	list[num] complexity = ModuleComplexity(methods);
-	list[num] codeCommentRatio = CodeCommentRatio(methods);*/
+	GetPercentage([<x,y> | <_,x,y> <- units]);
+	
+	
+	println("\t-- Calculating Volume Score");
+	int volumeScore = GetVolumeScore(project);
+	
+	println("\t-- Calculating Unit Complexity Score");
+	int unitComplexityScore = GetComplexityScore([x | <_,x,_> <- units]);
+
+	println("\t-- Calculating Code Duplication Score");
+	int codeDuplicationScore =  GetDuplicationScore([x | <_,_,x> <- units]);
+	
+	println("\t-- Calculating Unit Size Score");
+	int unitSizeScore = GetUnitSizeScore([RemoveComments(x) | <_,_,x> <- units]);
+	
+	println("\t-- Calculating Test score");
+	int testingScore = 3;
+	
+	println("\t-- Calculating Overall Score");
+	int overallScore = AvgScore([volumeScore, unitComplexityScore, codeDuplicationScore, unitSizeScore, testingScore]);
+	
+	int analyzabilityScore = AvgScore([volumeScore, codeDuplicationScore, unitSizeScore, testingScore]);
+	int changeabilityScore = AvgScore([unitComplexityScore, codeDuplicationScore]);
+	int stabilityScore = AvgScore([testingScore]);
+	int testabilityScore = AvgScore([unitComplexityScore, unitSizeScore, testingScore]);
+	
+	println("\n--- Results ---");
+	println("\tOverall Score: " + ScoreToString(overallScore));
+	println("\tVolume Score: " + ScoreToString(volumeScore));
+	println("\tUnit Complexity Score:  " + ScoreToString(unitComplexityScore));
+	println("\tCode Duplication Score:  " + ScoreToString(codeDuplicationScore));
+	println("\tUnit Size Score:  " + ScoreToString(unitSizeScore));
+	println("\tUnit Testing Score:  " + ScoreToString(testingScore));
+	
+	println("\n--- Specifications ---");
+	println("\tAnalyzability Score: " + ScoreToString(analyzabilityScore));
+	println("\tChangeability Score: " + ScoreToString(changeabilityScore));
+	println("\tStability Score: " + ScoreToString(stabilityScore));
+	println("\tTestability Score: " + ScoreToString(testabilityScore));*/
+	
 }
 
-private list[num] ModuleLengths(lrel[loc,CodeUnit, str] modules){
-	return [LinesOfCode(RemoveComments(x)) | <_,_,x> <- modules];
+private int AvgScore(list[int] scores)
+{
+	return round(sum([toReal(x) | x <- scores])/toReal(size(scores)));
 }
 
-private list[num] ModuleComplexity(lrel[loc,CodeUnit, str] modules){
-	return [GetComplexity(x) | <_,x,_> <- modules];
-}
-
-private list[num] CodeCommentRatio(lrel[loc,CodeUnit,str] modules){
-	return [GetCommentCodeRatio(x) | <_,_,x> <- modules];
+private str ScoreToString(int score)
+{
+	return ["","--", "-", "o", "+", "++"][score];
 }
