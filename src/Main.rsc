@@ -61,18 +61,18 @@ public void Main() {
 	int testabilityScore = AvgScore([unitComplexityScore, unitSizeScore, testingScore]);
 	
 	println("\n--- Results ---");
-	println("\tOverall Score: " + ScoreToString(overallScore));
-	println("\tVolume Score: " + ScoreToString(volumeScore));
+	println("\tOverall Score: \t\t" + ScoreToString(overallScore));
+	println("\tVolume Score: \t\t" + ScoreToString(volumeScore));
 	println("\tUnit Complexity Score:  " + ScoreToString(unitComplexityScore));
-	println("\tCode Duplication Score:  " + ScoreToString(codeDuplicationScore));
-	println("\tUnit Size Score:  " + ScoreToString(unitSizeScore));
-	println("\tUnit Testing Score:  " + ScoreToString(testingScore));
+	println("\tCode Duplication Score: " + ScoreToString(codeDuplicationScore));
+	println("\tUnit Size Score:  \t" + ScoreToString(unitSizeScore));
+	println("\tUnit Testing Score:  \t" + ScoreToString(testingScore));
 	
 	println("\n--- Specifications ---");
-	println("\tAnalyzability Score: " + ScoreToString(analyzabilityScore));
-	println("\tChangeability Score: " + ScoreToString(changeabilityScore));
-	println("\tStability Score: " + ScoreToString(stabilityScore));
-	println("\tTestability Score: " + ScoreToString(testabilityScore));
+	println("\tAnalyzability Score: \t" + ScoreToString(analyzabilityScore));
+	println("\tChangeability Score: \t" + ScoreToString(changeabilityScore));
+	println("\tStability Score: \t" + ScoreToString(stabilityScore));
+	println("\tTestability Score: \t" + ScoreToString(testabilityScore));
 }
 
 private int AvgScore(list[int] scores)
