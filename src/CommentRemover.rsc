@@ -1,6 +1,7 @@
 module CommentRemover
 
 import String;
+import List;
 
 public str RemoveComments(str line){
 	list[str] chars = split("", line);
@@ -16,25 +17,27 @@ public str RemoveComments(str line){
 			isString = !isString;
 		
 		// Start comment check
-		if(!isString && lastChar == "/")
-		{
-			if(c == "/")
-				isComment = true;
-			if(c == "*")
-				isMComment = true;
-		// End line comment Check
-		} else if(isComment && lastChar == "\n"){
-			isComment = false;
-			skip = 1;
-		// End multilineComment check
-		} else if(isMComment && lastChar == "*" && c == "/")
-		{
-			isMComment = false;
-			skip = 2;
+		if(!isString){
+			if(lastChar == "/")
+			{
+				if(c == "/")
+					isComment = true;
+				else if(c == "*")
+					isMComment = true;
+			// End line comment Check
+			} else if(isComment && lastChar == "\n"){
+				isComment = false;
+				skip = 1;
+			// End multilineComment check
+			} else if(isMComment && lastChar == "*" && c == "/")
+			{
+				isMComment = false;
+				skip = 2;
+			};
 		};
 		
 		// Add character to result
-		if(!isComment && !isMComment && skip == 0)
+		if(!isComment && !isMComment && skip == 0 && (indexOf(["\t","\r"], lastChar) < 0))
 			result += lastChar;
 		else if(skip > 0)
 			skip -= 1;
