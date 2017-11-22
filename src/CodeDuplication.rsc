@@ -24,6 +24,7 @@ public int GetDuplicationScore(list[str] unitLines)
 private num GetDuplication(list[str] moduleContents)
 {
 	lrel[str, lrel[int,int,bool]] index = CreateIndex(moduleContents);
+	println("\t\t - Created index");
 	real duplicatedLines = 0.0;
 	for(line <- index)
 	{
@@ -79,14 +80,17 @@ private lrel[str, lrel[int,int,bool]] CreateIndex(list[str] modules){
 		while(i >= 0)
 		{
 			str line = trim(lines[i]);
-			int pos = indexOf(lIndex, line);
-			if(pos == -1){
-				lIndex += line;
-				index += <line, []>;
-				pos = size(index) - 1;
+			if(size(line) > 1)
+			{
+				int pos = indexOf(lIndex, line);
+				if(pos == -1){
+					lIndex += line;
+					index += <line, []>;
+					pos = size(index) - 1;
+				};
+				index[pos][1] += [last];
+				last = <pos, size(index[pos][1]) -1, false>;
 			};
-			index[pos][1] += [last];
-			last = <pos, size(index[pos][1]) -1, false>;
 			i -= 1;
 		};
 	};

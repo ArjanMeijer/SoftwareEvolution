@@ -32,12 +32,14 @@ import util::FileSystem;
 public void Main() {
 	loc sproject = |project://smallsql0.21_src|;
 	loc lproject = |project://hsqldb-2.3.1|;
+	
+	s = now();
 	Analyze(sproject);
+	println(now() - s);
 }
 
 private void Analyze(loc project)
 {
-	s = now();
 	println("SIG Analyser - Assignment \nBy Niels Boerkamp and Arjan Meijer.");
 	println("Implementation of the SIG model as described in:\n\t\"A Practical Model for Measuring Maintainability\"");
 	println("\t By Ilja Heitlager, Tobias Kuipers and Joost Visser");
@@ -91,7 +93,6 @@ private void Analyze(loc project)
 	println("\tChangeability Score: \t" + ScoreToString(changeabilityScore));
 	println("\tStability Score: \t" + ScoreToString(stabilityScore));
 	println("\tTestability Score: \t" + ScoreToString(testabilityScore));
-	println(now() - s);
 }
 
 private int AvgScore(list[int] scores)
