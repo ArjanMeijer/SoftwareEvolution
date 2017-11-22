@@ -6,8 +6,8 @@ import util::FileSystem;
 import List;
 import IO;
 
-public int GetVolumeScore(loc project){
-	num score = GetVolume(project);
+public int GetVolumeScore(set[loc] projectFiles){
+	num score = sum([LinesOfCode(RemoveComments(readFile(x))) | x <- projectFiles]);
 	if(score < 66000)
 		return 5;
 	else if(score < 246000)
@@ -18,8 +18,4 @@ public int GetVolumeScore(loc project){
 		return 2;
 	else
 		return 1;
-}
-
-private num GetVolume(loc project){
-	return sum([LinesOfCode(RemoveComments(readFile(x))) | /file(x) <- crawl(project), x.extension == "java"]);
 }

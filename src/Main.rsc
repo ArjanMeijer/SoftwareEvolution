@@ -9,6 +9,12 @@ import lang::java::m3::AST;
 import ParseTree;
 import CodeDuplication;
 
+import LineCounter;
+import CommentRemover;
+import util::FileSystem;
+import List;
+import IO;
+
 import IO;
 import List;
 import String;
@@ -21,36 +27,44 @@ import CommentCodeRatio;
 import Volume;
 import TestAnalyzer;
 import DateTime;
+import util::FileSystem;
 
 public void Main() {
+	s = now();
 	println("SIG Analyser - Assignment \nBy Niels Boerkamp and Arjan Meijer.");
 	println("Implementation of the SIG model as described in:\n\t\"A Practical Model for Measuring Maintainability\"");
 	println("\t By Ilja Heitlager, Tobias Kuipers and Joost Visser");
 	println("\n\n");
 	
 	loc project = |project://smallsql0.21_src|;
+	loc lproject = |project://hsqldb-2.3.1|;
 	
 	println("--- Progress ---");
 	println("\t-- Creating M3 Model");
 	M3 model = GetModel(project);
 	
+	println("\t-- Getting files --");
+	set[loc] projectFiles = files(model);
+	
 	println("\t-- Parsing Units");
-	lrel[str,CodeUnit,str] units = Parse(model);
+	lrel[str,str] units = Parse(model);
 		
 	println("\t-- Calculating Volume Score");
-	int volumeScore = GetVolumeScore(project);
+	int volumeScore = GetVolumeScore(projectFiles);
 	
 	println("\t-- Calculating Unit Complexity Score");
-	int unitComplexityScore = GetComplexityScore([x | <_,x,_> <- units]);
-
+	int unitComplexityScore = GetComplexityScore(projectFiles);
+	
+	cds = now();
 	println("\t-- Calculating Code Duplication Score");
-	int codeDuplicationScore =  GetDuplicationScore([x | <_,_,x> <- units]);
+	int codeDuplicationScore =  GetDuplicationScore([x | <_,x> <- units]);
+	println(now() - cds);
 
 	println("\t-- Calculating Unit Size Score");
-	int unitSizeScore = GetUnitSizeScore([RemoveComments(x) | <_,_,x> <- units]);
+	int unitSizeScore = GetUnitSizeScore([RemoveComments(x) | <_,x> <- units]);
 	
 	println("\t-- Calculating Test score");
-	int testingScore = GetTestScore([<x,y> | <x,_,y> <- units]);
+	int testingScore = GetTestScore([<x,y> | <x,y> <- units]);
 	
 	println("\t-- Calculating Overall Score");
 	int overallScore = AvgScore([volumeScore, unitComplexityScore, codeDuplicationScore, unitSizeScore, testingScore]);
@@ -73,6 +87,7 @@ public void Main() {
 	println("\tChangeability Score: \t" + ScoreToString(changeabilityScore));
 	println("\tStability Score: \t" + ScoreToString(stabilityScore));
 	println("\tTestability Score: \t" + ScoreToString(testabilityScore));
+	println(now() - s);
 }
 
 private int AvgScore(list[int] scores)

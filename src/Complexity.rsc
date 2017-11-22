@@ -13,8 +13,24 @@ import lang::java::\syntax::Java15;
 import lang::java::\syntax::Disambiguate;
 import util::Math;
 
-public int GetComplexityScore(list[CodeUnit] units){
-	return RiskToScore([cyclomaticComplexity(x) | x <- units]);
+public int GetComplexityScore(set[loc] projectFiles){
+	return RiskToScore(Shrink([FileScore(y) | x <- projectFiles, y := createAstFromFile(x, false)]));
+}
+
+private list[int] FileScore(value x){
+	list[int] complexities = [];
+	visit(x){
+		case \method(_,_,_,_,i) : complexities += cyclomaticComplexity(i);
+	}
+	return complexities;
+}
+
+public list[int] Shrink(list[list[int]] values)
+{
+	list[int] res = [];
+	for(list[int] val <- values)
+		res += val;
+	return res;
 }
 
 public int RiskToScore(list[int] values)
@@ -48,19 +64,20 @@ public num ToRisk(int i)
 		return 3.0;
 }
 
-private int cyclomaticComplexity(CodeUnit m) {
-  int result = 1;
+private int cyclomaticComplexity(value m) {
+  int result = 0;
   visit (m) {
-    case (Stm)`do <Stm _> while (<Expr _>);`: result += 1;
-    case (Stm)`while (<Expr _>) <Stm _>`: result += 1;
-    case (Stm)`if (<Expr _>) <Stm _>`: result +=1;
-    case (Stm)`if (<Expr _>) <Stm _> else <Stm _>`: result +=1;
-    case (Stm)`for (<{Expr ","}* _>; <Expr? _>; <{Expr ","}*_>) <Stm _>` : result += 1;
-    case (Stm)`for (<LocalVarDec _> ; <Expr? e> ; <{Expr ","}* _>) <Stm _>`: result += 1;
-    case (Stm)`for (<FormalParam _> : <Expr _>) <Stm _>` : result += 1;
-    case (Stm)`switch (<Expr _> ) <SwitchBlock _>`: result += 1;
-    case (SwitchLabel)`case <Expr _> :` : result += 1;
-    case (CatchClause)`catch (<FormalParam _>) <Block _>` : result += 1;
+    case \do(b,c): result += 1;
+    case \while(c,b): result += 1;
+    case \if(c,t,e): result +=1;
+    case \if(c,t): result +=1;
+    case \for(i,c,u,b): result += 1;
+    case \for(i,u,b): result += 1;
+    case \switch (e,s): result += 1;
+    case \case (e) : result += 1;
+    case \try (b,c) : result += 1;
+    case \try (b,c,f) : result += 1;
+    case \catch (e,b) : result += 1;
   }
   return result;
 }
