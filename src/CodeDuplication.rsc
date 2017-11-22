@@ -2,6 +2,7 @@ module CodeDuplication
 
 import List;
 import String;
+import Set;
 import IO;
 import util::ValueUI;
 import util::Math;
@@ -78,11 +79,13 @@ private list[lrel[int,int,bool]] CreateIndex(list[str] modules){
 			str line = trim(lines[i]);
 			if(size(line) > 1)
 			{
-				int pos = indexOf(lIndex, line);
-				if(pos == -1){
+				int pos = 0;
+				if(line notin lIndex){
 					lIndex += line;
 					index += [[]];
 					pos = size(index) - 1;
+				} else {
+					pos = indexOf(lIndex, line);
 				};
 				index[pos] += [last];
 				last = <pos, size(index[pos]) -1, false>;
