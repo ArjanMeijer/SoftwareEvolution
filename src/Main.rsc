@@ -22,7 +22,6 @@ import CodeParser;
 import CommentRemover;
 import LineCounter;
 import Complexity;
-import LineCounterTest;
 import CommentCodeRatio;
 import Volume;
 import TestAnalyzer;
