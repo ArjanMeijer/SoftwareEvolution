@@ -30,14 +30,18 @@ import DateTime;
 import util::FileSystem;
 
 public void Main() {
+	loc sproject = |project://smallsql0.21_src|;
+	loc lproject = |project://hsqldb-2.3.1|;
+	Analyze(sproject);
+}
+
+private void Analyze(loc project)
+{
 	s = now();
 	println("SIG Analyser - Assignment \nBy Niels Boerkamp and Arjan Meijer.");
 	println("Implementation of the SIG model as described in:\n\t\"A Practical Model for Measuring Maintainability\"");
 	println("\t By Ilja Heitlager, Tobias Kuipers and Joost Visser");
 	println("\n\n");
-	
-	loc project = |project://smallsql0.21_src|;
-	loc lproject = |project://hsqldb-2.3.1|;
 	
 	println("--- Progress ---");
 	println("\t-- Creating M3 Model");

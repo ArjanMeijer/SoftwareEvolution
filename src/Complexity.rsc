@@ -3,14 +3,11 @@ module Complexity
 import CodeParser;
 import IO;
 import List;
-import Exception;
 import ParseTree;
 import util::FileSystem;
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
-import lang::java::\syntax::Java15;
-import lang::java::\syntax::Disambiguate;
 import util::Math;
 
 public int GetComplexityScore(set[loc] projectFiles){

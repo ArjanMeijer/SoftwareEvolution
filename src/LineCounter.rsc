@@ -9,5 +9,5 @@ public int GetUnitSizeScore(list[int] counts){
 }
 
 public int LinesOfCode(str lines){
-	return size([line | line <- split("\n", lines), size(line) > 2]); 
+	return size([line | line <- split("\n", lines)]); 
 }

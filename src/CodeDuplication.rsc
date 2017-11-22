@@ -21,25 +21,26 @@ public int GetDuplicationScore(list[str] unitLines)
 		return 1;
 }
 
-public num GetDuplication(list[str] moduleContents)
+private num GetDuplication(list[str] moduleContents)
 {
 	lrel[str, lrel[int,int,bool]] index = CreateIndex(moduleContents);
 	real duplicatedLines = 0.0;
 	for(line <- index)
 	{
-		list[lrel[int,int]] duplicates = [RDuplicate(line[1], t, index, 0) | t <- line[1]];
-		for(lrel[int,int] dList <- duplicates)
-			for(tuple[int,int] d <- dList)
-			{
-				if(d[0] > 0 && d[1] > 0 && index[d[0]][1][d[1]][2] != true)
+			list[lrel[int,int]] duplicates = [RDuplicate(line[1], t, index, 0) | t <- line[1]];
+			
+			for(lrel[int,int] dList <- duplicates)
+				for(tuple[int,int] d <- dList)
 				{
-					lrel[int,int,bool] tVals = index[d[0]][1];
-					tVals[d[1]][2] = true;
-					index[d[0]][1] = tVals;
-					
-					duplicatedLines += 1;
+					if(d[0] > 0 && d[1] > 0 && index[d[0]][1][d[1]][2] != true)
+					{
+						lrel[int,int,bool] tVals = index[d[0]][1];
+						tVals[d[1]][2] = true;
+						index[d[0]][1] = tVals;
+						
+						duplicatedLines += 1;
+					};
 				};
-			};
 	};
 	return duplicatedLines/toReal(size(index));
 }

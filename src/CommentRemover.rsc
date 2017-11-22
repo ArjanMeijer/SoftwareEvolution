@@ -2,6 +2,7 @@ module CommentRemover
 
 import String;
 import List;
+import IO;
 
 public tuple[str,int] RemoveComments(str line){
 	list[str] chars = split("", line);
