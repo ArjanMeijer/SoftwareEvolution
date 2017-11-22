@@ -25,7 +25,7 @@ public int GetTestScore(lrel[str,str] units){
 		return 5;
 }
 
-private num GetPercentage(lrel[str, str] contents)
+public num GetPercentage(lrel[str, str] contents)
 {
 	list[str] methods = [];
 	lrel[str, str] tests = [];
