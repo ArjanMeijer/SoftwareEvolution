@@ -4,8 +4,8 @@ import String;
 import List;
 import Complexity;
 
-public int GetUnitSizeScore(list[str] units){
-	return RiskToScore([LinesOfCode(x) | x <- units]);
+public int GetUnitSizeScore(list[int] counts){
+	return RiskToScore(counts);
 }
 
 public int LinesOfCode(str lines){

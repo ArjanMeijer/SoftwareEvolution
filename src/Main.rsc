@@ -47,7 +47,7 @@ public void Main() {
 	set[loc] projectFiles = files(model);
 	
 	println("\t-- Parsing Units");
-	lrel[str,str] units = Parse(model);
+	lrel[str, str, int] units = Parse(model);
 		
 	println("\t-- Calculating Volume Score");
 	int volumeScore = GetVolumeScore(projectFiles);
@@ -57,14 +57,14 @@ public void Main() {
 	
 	cds = now();
 	println("\t-- Calculating Code Duplication Score");
-	int codeDuplicationScore =  GetDuplicationScore([x | <_,x> <- units]);
+	int codeDuplicationScore =  GetDuplicationScore([x | <_,x,_> <- units]);
 	println(now() - cds);
 
 	println("\t-- Calculating Unit Size Score");
-	int unitSizeScore = GetUnitSizeScore([RemoveComments(x) | <_,x> <- units]);
+	int unitSizeScore = GetUnitSizeScore([x | <_,_,x> <- units]);
 	
 	println("\t-- Calculating Test score");
-	int testingScore = GetTestScore([<x,y> | <x,y> <- units]);
+	int testingScore = GetTestScore([<x,y> | <x,y,_> <- units]);
 	
 	println("\t-- Calculating Overall Score");
 	int overallScore = AvgScore([volumeScore, unitComplexityScore, codeDuplicationScore, unitSizeScore, testingScore]);

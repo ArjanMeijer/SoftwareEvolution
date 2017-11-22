@@ -3,7 +3,7 @@ module CommentRemover
 import String;
 import List;
 
-public str RemoveComments(str line){
+public tuple[str,int] RemoveComments(str line){
 	list[str] chars = split("", line);
 	bool isString = false;
 	bool isComment = false;
@@ -11,6 +11,7 @@ public str RemoveComments(str line){
 	str result = "";
 	str lastChar = "";
 	int skip = 0;
+	int lines = 0;
 	for(c <- chars){
 		// Toggle string
 		if(c == "\"" && !isComment)
@@ -38,7 +39,11 @@ public str RemoveComments(str line){
 		
 		// Add character to result
 		if(!isComment && !isMComment && skip == 0 && (indexOf(["\t","\r"], lastChar) < 0))
+		{
 			result += lastChar;
+			if(lastChar == "\n")
+				lines += 1;
+		}
 		else if(skip > 0)
 			skip -= 1;
 		
@@ -48,6 +53,10 @@ public str RemoveComments(str line){
 	
 	// Add last value to result
 	if(!isComment && !isMComment && skip == 0)
+	{
 		result += lastChar;
-	return result;
+		if(lastChar == "\n")
+			lines += 1;
+	}
+	return <result, lines>;
 }
