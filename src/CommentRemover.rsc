@@ -5,7 +5,6 @@ import List;
 import IO;
 
 public tuple[str,int] RemoveComments(str line){
-	list[str] chars = split("", line);
 	bool isString = false;
 	bool isComment = false;
 	bool isMComment = false;
@@ -13,7 +12,9 @@ public tuple[str,int] RemoveComments(str line){
 	str lastChar = "";
 	int skip = 0;
 	int lines = 0;
-	for(c <- chars){
+	int index = 0;
+	while(index < size(line)){
+		str c = line[index];
 		// Toggle string
 		if(c == "\"" && !isComment)
 			isString = !isString;
@@ -39,7 +40,7 @@ public tuple[str,int] RemoveComments(str line){
 		};
 		
 		// Add character to result
-		if(!isComment && !isMComment && skip == 0 && (indexOf(["\t","\r"], lastChar) < 0))
+		if(!isComment && !isMComment && skip == 0 && lastChar != "\t" && lastChar != "\r")
 		{
 			result += lastChar;
 			if(lastChar == "\n")
@@ -50,10 +51,11 @@ public tuple[str,int] RemoveComments(str line){
 		
 		// Update Last value
 		lastChar = c;
+		index += 1;
 	};
 	
 	// Add last value to result
-	if(!isComment && !isMComment && skip == 0)
+	if(!isComment && !isMComment && skip == 0 && lastChar != "\t" && lastChar != "\r")
 	{
 		result += lastChar;
 		if(lastChar == "\n")
