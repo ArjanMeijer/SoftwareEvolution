@@ -39,6 +39,9 @@ public tuple[str,int] RemoveComments(str line){
 			};
 		};
 		
+		if(lastChar == "\n" && c == "\n" && skip == 0)
+			skip = 1;
+		
 		// Add character to result
 		if(!isComment && !isMComment && skip == 0 && lastChar != "\t" && lastChar != "\r")
 		{
