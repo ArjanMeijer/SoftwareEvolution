@@ -67,7 +67,8 @@ private lrel[int,int] RDuplicate(lrel[int,int,bool] values, tuple[int,int,bool] 
 
 private list[lrel[int,int,bool]] CreateIndex(list[str] modules){
 	list[lrel[int,int,bool]] index = [];
-	list[str] lIndex = [];
+	map[str, int] lIndex = ();
+	int lIndexCounter = 0;
 	for(m <- modules)
 	{
 		list[str] lines = split("\n", m);
@@ -81,11 +82,12 @@ private list[lrel[int,int,bool]] CreateIndex(list[str] modules){
 			{
 				int pos = 0;
 				if(line notin lIndex){
-					lIndex += line;
+					lIndex += (line : lIndexCounter);
+					lIndexCounter += 1;
 					index += [[]];
 					pos = size(index) - 1;
 				} else {
-					pos = indexOf(lIndex, line);
+					pos = lIndex[line];
 				};
 				index[pos] += [last];
 				last = <pos, size(index[pos]) -1, false>;

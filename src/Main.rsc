@@ -32,7 +32,7 @@ public void Main() {
 	loc lproject = |project://hsqldb-2.3.1|;
 	
 	s = now();
-	Analyze(sproject);
+	Analyze(lproject);
 	println(now() - s);
 }
 
@@ -59,10 +59,8 @@ private void Analyze(loc project)
 	println("\t-- Calculating Unit Complexity Score");
 	int unitComplexityScore = GetComplexityScore(projectFiles);
 	
-	cds = now();
 	println("\t-- Calculating Code Duplication Score");
 	int codeDuplicationScore =  GetDuplicationScore([x | <_,x,_> <- units]);
-	println(now() - cds);
 
 	println("\t-- Calculating Unit Size Score");
 	int unitSizeScore = GetUnitSizeScore([x | <_,_,x> <- units]);
