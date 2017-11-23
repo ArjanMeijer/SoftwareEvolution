@@ -25,7 +25,7 @@ public int GetDuplicationScore(list[str] unitLines, int volume)
 		return 1;
 }
 
-private int GetDuplication(list[str] moduleContents)
+public num GetDuplication(list[str] moduleContents)
 {
 	list[lrel[int,int,bool]] index = CreateIndex(moduleContents);
 	int duplicatedLines = 0;
