@@ -38,10 +38,12 @@ public num GetPercentage(lrel[str, str] contents)
 	list[str] notUsed = methods;
 	for(str t <- tests)
 		notUsed = [x | x <- notUsed, !contains(t, x)];
-	println("\t\t- Test found:     <size(tests)>");
-	println("\t\t- Methods found:  <size(methods)>");
-	println("\t\t- Tested methods: <size(methods) - size(notUsed)>");
-	return 1 - (toReal(size(notUsed))/toReal(size(methods)));
+	println("\t\t- Test found:        <size(tests)>");
+	println("\t\t- Methods found:     <size(methods)>");
+	println("\t\t- Tested methods:    <size(methods) - size(notUsed)>");
+	num res = 1.0 - (toReal(size(notUsed))/toReal(size(methods)));
+	println("\t\t- Tested percentage: <res>");
+	return res;
 }
 
 
