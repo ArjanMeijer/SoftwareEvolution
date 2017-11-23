@@ -33,9 +33,17 @@ public list[int] Shrink(list[list[int]] values)
 public int RiskToScore(list[int] values)
 {
 	list[num] risks = [ToRisk(x) | x <- values];
+	num low = size([x | x <- risks, x == 0.0])/ toReal(size(risks));
 	num moderate = size([x | x <- risks, x == 1.0]) / toReal(size(risks));
 	num high = size([x | x <- risks, x == 2.0]) / toReal(size(risks));
 	num extreme = size([x | x <- risks, x == 3.0]) / toReal(size(risks));
+	
+	println("\t\t- Categories & percentages");
+	println("\t\t    Low:      <low * 100>");
+	println("\t\t    Moderate: <moderate * 100>");
+	println("\t\t    High:     <high * 100>");
+	println("\t\t    Extreme:  <extreme * 100>");
+	
 	
 	if(moderate <= .25 && high <= 0 && extreme <= 0)
 		return 5;

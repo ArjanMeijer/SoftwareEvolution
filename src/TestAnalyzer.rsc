@@ -28,16 +28,19 @@ public int GetTestScore(lrel[str,str] units){
 public num GetPercentage(lrel[str, str] contents)
 {
 	list[str] methods = [];
-	lrel[str, str] tests = [];
+	list[str] tests = [];
 	for(tuple[str,str] val <- contents)
 		if(startsWith(val[0], "test"))
-			tests += val;
+			tests += val[1];
 		else
 			methods += val[0];
 	
 	list[str] notUsed = methods;
-	for(tuple[str,str] t <- tests)
-		notUsed = [x | x <- notUsed, !contains(t[1], x)];
+	for(str t <- tests)
+		notUsed = [x | x <- notUsed, !contains(t, x)];
+	println("\t\t- Test found:     <size(tests)>");
+	println("\t\t- Methods found:  <size(methods)>");
+	println("\t\t- Tested methods: <size(methods) - size(notUsed)>");
 	return 1 - (toReal(size(notUsed))/toReal(size(methods)));
 }
 

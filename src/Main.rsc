@@ -47,20 +47,21 @@ private void Analyze(loc project)
 	println("\t-- Creating M3 Model");
 	M3 model = GetModel(project);
 	
-	println("\t-- Getting files --");
+	println("\t-- Getting projectfiles");
 	set[loc] projectFiles = files(model);
 	
 	println("\t-- Parsing Units");
 	lrel[str, str, int] units = Parse(model);
 		
 	println("\t-- Calculating Volume Score");
-	int volumeScore = GetVolumeScore(projectFiles);
+	int totalVolume = GetVolume(projectFiles);
+	int volumeScore = GetVolumeScore(totalVolume);
 	
 	println("\t-- Calculating Unit Complexity Score");
 	int unitComplexityScore = GetComplexityScore(projectFiles);
 	
 	println("\t-- Calculating Code Duplication Score");
-	int codeDuplicationScore =  GetDuplicationScore([x | <_,x,_> <- units]);
+	int codeDuplicationScore =  GetDuplicationScore([x | <_,x,_> <- units], totalVolume);
 
 	println("\t-- Calculating Unit Size Score");
 	int unitSizeScore = GetUnitSizeScore([x | <_,_,x> <- units]);

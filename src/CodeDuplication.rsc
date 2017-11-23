@@ -7,9 +7,12 @@ import IO;
 import util::ValueUI;
 import util::Math;
 
-public int GetDuplicationScore(list[str] unitLines)
+public int GetDuplicationScore(list[str] unitLines, int volume)
 {
-	num res = GetDuplication(unitLines);
+	int duplications = GetDuplication(unitLines);
+	println("\t\t- Duplicated lines:      <duplications>");
+	num res = toReal(duplications)/toReal(volume);
+	println("\t\t- Duplicated percentage: <res * 100>");
 	if(res <= 0.03)
 		return 5;
 	else if (res <= 0.05)
@@ -22,11 +25,10 @@ public int GetDuplicationScore(list[str] unitLines)
 		return 1;
 }
 
-private num GetDuplication(list[str] moduleContents)
+private int GetDuplication(list[str] moduleContents)
 {
 	list[lrel[int,int,bool]] index = CreateIndex(moduleContents);
-	println("\t\t - Created index");
-	real duplicatedLines = 0.0;
+	int duplicatedLines = 0;
 	for(int i <- [0 .. size(index)])
 		for(int j <- [0.. size(index[i])])
 		{
@@ -38,9 +40,7 @@ private num GetDuplication(list[str] moduleContents)
 					duplicatedLines += 1;
 				};
 		};
-	
-	println("\t\t-- Duplicated lines: <duplicatedLines>");
-	return duplicatedLines/toReal(size(index));
+	return duplicatedLines;
 }
 
 
