@@ -39,6 +39,8 @@ private num GetDuplication(list[str] moduleContents)
 						duplicatedLines += 1;
 					};
 	};
+	
+	println("\t\t-- Duplicated lines: <duplicatedLines>");
 	return duplicatedLines/toReal(size(index));
 }
 

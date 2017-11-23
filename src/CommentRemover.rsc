@@ -11,8 +11,9 @@ public tuple[str,int] RemoveComments(str line){
 	str result = "";
 	str lastChar = "";
 	int skip = 0;
-	int lines = 0;
+	int lines = 1;
 	int index = 0;
+	str lastAdded = "";
 	while(index < size(line)){
 		str c = line[index];
 		// Toggle string
@@ -39,12 +40,16 @@ public tuple[str,int] RemoveComments(str line){
 			};
 		};
 		
-		if(lastChar == "\n" && c == "\n" && skip == 0)
-			skip = 1;
+		if(lastAdded == "\n" && lastChar == "\n")
+			skip += 1;
 		
+		if(result == "" && lastChar == "\n" && skip == 0)
+			skip = 1;
+		 
 		// Add character to result
 		if(!isComment && !isMComment && skip == 0 && lastChar != "\t" && lastChar != "\r")
 		{
+			lastAdded = lastChar;
 			result += lastChar;
 			if(lastChar == "\n")
 				lines += 1;

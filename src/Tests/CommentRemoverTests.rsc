@@ -19,5 +19,9 @@ test bool RemoveCommentTest3() {
 					// some inline comment
 					
 				}";
-	return <"\npublic string ToString() {\n\n}",3> == RemoveComments(code);
+				
+	str code2 = "public string ToString() {\n}";
+					
+					println(RemoveComments(code));	
+	return <code2,2> == RemoveComments(code);
 }

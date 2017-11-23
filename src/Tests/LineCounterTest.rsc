@@ -12,5 +12,7 @@ test bool LinesOfCodeTestSlashTrick() {
 	// The line counter shouldn't trigger on the second slash, since it is not followed by a n.
 	str file = "firstline\nsecondline\thirdline";
 	
+	res = LinesOfCode(file);
+	println(res);
 	return LinesOfCode(file) == 2;
 }
