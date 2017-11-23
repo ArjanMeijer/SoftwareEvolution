@@ -39,10 +39,10 @@ public int RiskToScore(list[int] values)
 	num extreme = size([x | x <- risks, x == 3.0]) / toReal(size(risks));
 	
 	println("\t\t- Categories & percentages");
-	println("\t\t    Low:      <low * 100>");
-	println("\t\t    Moderate: <moderate * 100>");
-	println("\t\t    High:     <high * 100>");
-	println("\t\t    Extreme:  <extreme * 100>");
+	println("\t\t    Low         (1 -10):      <low * 100>");
+	println("\t\t    Moderate    (10-20):      <moderate * 100>");
+	println("\t\t    High        (20-50):      <high * 100>");
+	println("\t\t    Extreme     ( \> 50):      <extreme * 100>");
 	
 	
 	if(moderate <= .25 && high <= 0 && extreme <= 0)
