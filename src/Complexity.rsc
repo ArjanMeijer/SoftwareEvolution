@@ -5,6 +5,7 @@ import IO;
 import List;
 import ParseTree;
 import util::FileSystem;
+import util::ValueUI;
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
@@ -30,8 +31,24 @@ public list[int] Shrink(list[list[int]] values)
 	return res;
 }
 
+private void CreateFile(list[int] values){
+	map[int,int] scores = ();
+	for(val <- values)
+	{
+		if(val notin scores)
+			scores += (val:1);
+		else
+			scores[val] += 1;
+	}
+	str fileContent = "";
+	for(line <- ["<z> : <scores[z]>"| z <- [0 .. max(values)], z in values])
+		fileContent += "\t\t\t <line> \n";
+	println(fileContent);
+}
+
 public int RiskToScore(list[int] values)
 {
+	CreateFile(values);
 	list[num] risks = [ToRisk(x) | x <- values];
 	num low = size([x | x <- risks, x == 0.0])/ toReal(size(risks));
 	num moderate = size([x | x <- risks, x == 1.0]) / toReal(size(risks));
@@ -70,12 +87,12 @@ public num ToRisk(int i)
 }
 
 private int cyclomaticComplexity(value m) {
-  int result = 0;
+  int result = 1;
   visit (m) {
     case \do(b,c): result += 1;
     case \while(c,b): result += 1;
-    case \if(c,t,e): result +=1;
-    case \if(c,t): result +=1;
+    case \if(c,t,e): result += AnalyzeIf(c);
+    case \if(c,t): result += AnalyzeIf(c);
     case \for(i,c,u,b): result += 1;
     case \for(i,u,b): result += 1;
     case \switch (e,s): result += 1;
@@ -85,4 +102,12 @@ private int cyclomaticComplexity(value m) {
     case \catch (e,b) : result += 1;
   }
   return result;
+}
+
+private int AnalyzeIf(value c){
+	result = 1;
+	visit(c){
+		case \infix(lhs, op, rhs) : result += (op == "&&" || op == "||")? 1 : 0;
+	}	
+	return result;
 }

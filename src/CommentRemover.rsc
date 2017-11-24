@@ -10,11 +10,11 @@ public tuple[str,int] RemoveComments(str line){
 	bool isMComment = false;
 	str result = "";
 	str lastChar = "";
+	str lastAdded = "";
+	
 	int skip = 0;
 	int lines = 1;
-	int index = 0;
-	str lastAdded = "";
-	while(index < size(line)){
+	for(int index <- [0 .. size(line)]){
 		str c = line[index];
 		// Toggle string
 		if(c == "\"" && !isComment)
@@ -59,7 +59,6 @@ public tuple[str,int] RemoveComments(str line){
 		
 		// Update Last value
 		lastChar = c;
-		index += 1;
 	};
 	
 	// Add last value to result

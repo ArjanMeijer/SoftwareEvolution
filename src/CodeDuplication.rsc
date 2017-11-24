@@ -28,6 +28,7 @@ public int GetDuplicationScore(list[str] unitLines, int volume)
 public int GetDuplication(list[str] moduleContents)
 {
 	list[lrel[int,int,bool]] index = CreateIndex(moduleContents);
+	println("\t\t- Created Index");
 	int duplicatedLines = 0;
 	for(int i <- [0 .. size(index)])
 		for(int j <- [0.. size(index[i])])
