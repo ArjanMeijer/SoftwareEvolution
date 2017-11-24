@@ -33,7 +33,7 @@ public int GetDuplication(list[str] moduleContents)
 	for(int i <- [0 .. size(index)])
 		for(int j <- [0.. size(index[i])])
 		{
-			lrel[int,int] duplicates = RDuplicate(index[i], index[i][j], <i,j>, index, 1);
+			lrel[int,int] duplicates = RDuplicate(index[i] - index[i][j], index[i][j], <i,j>, index, 1);
 			for(tuple[int,int] d <- duplicates)
 				if(index[d[0]][d[1]][2] != true)
 				{
@@ -46,7 +46,7 @@ public int GetDuplication(list[str] moduleContents)
 
 
 private lrel[int,int] RDuplicate(lrel[int,int,bool] values, tuple[int,int,bool] target, tuple[int,int] current, list[lrel[int,int,bool]] index, int currentLevel){
-	values -= target;
+	//values -= target;
 	same = [];
 	
 	if(target[0] != -1 && target[1] != -1 && target != index[target[0]][target[1]])

@@ -40,11 +40,8 @@ public tuple[str,int] RemoveComments(str line){
 			};
 		};
 		
-		if(lastAdded == "\n" && lastChar == "\n")
+		if((lastAdded == "\n" || (lastAdded == "" && skip == 0)) && lastChar == "\n")
 			skip += 1;
-		
-		if(result == "" && lastChar == "\n" && skip == 0)
-			skip = 1;
 		 
 		// Add character to result
 		if(!isComment && !isMComment && skip == 0 && lastChar != "\t" && lastChar != "\r")
