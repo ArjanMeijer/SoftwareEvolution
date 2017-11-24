@@ -42,7 +42,7 @@ public num GetPercentage(lrel[str, str] contents)
 	println("\t\t- Methods found:     <size(methods)>");
 	println("\t\t- Tested methods:    <size(methods) - size(notUsed)>");
 	num res = 1.0 - (toReal(size(notUsed))/toReal(size(methods)));
-	println("\t\t- Tested percentage: <res>");
+	println("\t\t- Tested percentage: <res * 100>");
 	return res;
 }
 

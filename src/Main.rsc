@@ -32,7 +32,7 @@ public void Main() {
 	loc lproject = |project://hsqldb-2.3.1|;
 	
 	s = now();
-	Analyze(sproject);
+	Analyze(lproject);
 	println(now() - s);
 }
 
